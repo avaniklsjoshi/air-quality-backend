@@ -7,7 +7,7 @@
     "lint": "eslint --no-ignore --ext .js src",
     "format": "npm run prettier -- --write",
     "prettier": "prettier \"**/*.+(json|js|md|mdx)\"",
-    "start": "node src/index.js",
+    "start": "node -r esm src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
@@ -37,6 +37,7 @@
     "cors": "^2.8.5",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "helmet": "^3.21.2",

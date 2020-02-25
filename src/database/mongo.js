@@ -1,5 +1,5 @@
-const { MongoClient } = require("mongodb");
-const { DB_USERNAME, DB_PASSWORD } = require("../../configs/constants");
+import { MongoClient } from "mongodb";
+import { DB_USERNAME, DB_PASSWORD } from "../../configs/constants";
 
 let database = null;
 
@@ -7,7 +7,7 @@ let database = null;
  * This function makes connections with DB
  * @return {Null} nothing
  */
-async function startDatabase() {
+export async function startDatabase() {
   const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@airqualityindex-grxrk.mongodb.net/test?retryWrites=true&w=majority`;
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -28,12 +28,7 @@ async function startDatabase() {
  * This function gets connected DB for further operations
  * @return {Null} nothing
  */
-async function getDatabase() {
+export async function getDatabase() {
   if (!database) await startDatabase();
   return database;
 }
-
-module.exports = {
-  getDatabase,
-  startDatabase
-};

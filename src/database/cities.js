@@ -1,13 +1,13 @@
-const { getDatabase } = require("./mongo");
-const { ObjectID } = require("mongodb");
-const { COLLECTION_NAME } = require("../../configs/constants");
+import { getDatabase } from "./mongo";
+import { ObjectID } from "mongodb";
+import { COLLECTION_NAME } from "../../configs/constants";
 
 /**
  * This function insert city data in DB
  * @param {Object} city information
  * @return {string} id
  */
-async function insertCity(city) {
+export async function insertCity(city) {
   const database = await getDatabase();
   const { insertedId } = await database
     .collection(COLLECTION_NAME)
@@ -19,7 +19,7 @@ async function insertCity(city) {
  * This function gets city data from DB
  * @return {Array} all cities array
  */
-async function getCities() {
+export async function getCities() {
   const database = await getDatabase();
   return await database
     .collection(COLLECTION_NAME)
@@ -32,7 +32,7 @@ async function getCities() {
  * @param {string} id city id information
  * @return {Null} nothing
  */
-async function deleteCity(id) {
+export async function deleteCity(id) {
   const database = await getDatabase();
   await database.collection(COLLECTION_NAME).deleteOne({
     _id: new ObjectID(id)
@@ -45,7 +45,7 @@ async function deleteCity(id) {
  * @param {Object} city information
  * @return {Null} nothing
  */
-async function updateCity(id, city) {
+export async function updateCity(id, city) {
   const database = await getDatabase();
   delete city._id;
   await database.collection(COLLECTION_NAME).update(

@@ -1,13 +1,18 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const {PORT} = require('../configs/constants');
-const {startDatabase} = require('./database/mongo');
-const {insertCity, getCities, deleteCity, updateCity} = require('./database/cities');
-const jwt = require('express-jwt');
-const jwksRsa = require('jwks-rsa');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const { PORT } = require("../configs/constants");
+const { startDatabase } = require("./database/mongo");
+const {
+  insertCity,
+  getCities,
+  deleteCity,
+  updateCity
+} = require("./database/cities");
+const jwt = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
 
 // defining the Express app
 const app = express();

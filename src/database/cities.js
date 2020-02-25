@@ -1,7 +1,6 @@
 const {getDatabase} = require('./mongo');
 const {ObjectID} = require('mongodb');
-
-const collectionName = 'cities';
+const {collectionName} = require('../../configs/constants'); 
 
 async function insertCity(city) {
   const database = await getDatabase();
@@ -13,7 +12,6 @@ async function getCities() {
   const database = await getDatabase();
   return await database.collection(collectionName).find({}).toArray();
 }
-
 
 async function deleteCity(id) {
     const database = await getDatabase();

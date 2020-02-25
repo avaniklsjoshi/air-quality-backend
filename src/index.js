@@ -63,7 +63,7 @@ app.put('/:id', async (req, res) => {
 });
 
 startDatabase().then(async () => {
-    await insertCity({city: 'Hello, now from the in-memory database!'});
+    // await insertCity({city: 'Hello, now from the in-memory database!'});
   
     // starting the server
     app.listen(4000, () => {

@@ -1,20 +1,20 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es6': true,
+  env: {
+    browser: true,
+    es6: true
   },
-  'extends': [
-    'google',
-  ],
-  'globals': {
-    'Atomics': 'readonly',
-    'SharedArrayBuffer': 'readonly',
+  extends: ["prettier", "google"],
+  globals: {
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly"
   },
-  'parserOptions': {
-    'ecmaVersion': 2018,
-    'sourceType': 'module',
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: "module"
   },
-  'rules': {
-   'max-len': 0
+  rules: {
+    "max-len": 0,
+    "prettier/prettier": "0"
   },
+  plugins: ["prettier"]
 };

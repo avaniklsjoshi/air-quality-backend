@@ -1,5 +1,5 @@
-const {MongoClient} = require('mongodb');
-const {DB_USERNAME, DB_PASSWORD}= require('../../configs/constants');
+const { MongoClient } = require("mongodb");
+const { DB_USERNAME, DB_PASSWORD } = require("../../configs/constants");
 
 let database = null;
 
@@ -9,16 +9,19 @@ let database = null;
  */
 async function startDatabase() {
   const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@airqualityindex-grxrk.mongodb.net/test?retryWrites=true&w=majority`;
-  const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
   try {
     await client.connect();
   } catch (e) {
-    console.log('DB error: ', e);
+    console.log("DB error: ", e);
   } finally {
     // await client.close();
   }
 
-  database = client.db('AirQuality');
+  database = client.db("AirQuality");
 }
 
 /**
@@ -32,5 +35,5 @@ async function getDatabase() {
 
 module.exports = {
   getDatabase,
-  startDatabase,
+  startDatabase
 };

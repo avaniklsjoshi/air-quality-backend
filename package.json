@@ -4,8 +4,22 @@
   "description": "backend app for air quality",
   "main": "src/index.js",
   "scripts": {
+    "lint": "tsc && eslint --no-ignore --ext .js src",
+    "format": "npm run prettier -- --write",
+    "prettier": "prettier \"**/*.+(json|js|md|mdx)\"",
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "*.{js}": [
+      "eslint --fix --max-warnings 2",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "repository": {
     "type": "git",
@@ -21,15 +35,20 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "helmet": "^3.21.2",
     "jwks-rsa": "^1.7.0",
     "mongodb": "^3.5.3",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "prettier": "^1.19.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8"
   }
 }

@@ -1,6 +1,6 @@
-const {getDatabase} = require('./mongo');
-const {ObjectID} = require('mongodb');
-const {COLLECTION_NAME} = require('../../configs/constants');
+const { getDatabase } = require("./mongo");
+const { ObjectID } = require("mongodb");
+const { COLLECTION_NAME } = require("../../configs/constants");
 
 /**
  * This function insert city data in DB
@@ -9,7 +9,9 @@ const {COLLECTION_NAME} = require('../../configs/constants');
  */
 async function insertCity(city) {
   const database = await getDatabase();
-  const {insertedId} = await database.collection(COLLECTION_NAME).insertOne(city);
+  const { insertedId } = await database
+    .collection(COLLECTION_NAME)
+    .insertOne(city);
   return insertedId;
 }
 
@@ -19,7 +21,10 @@ async function insertCity(city) {
  */
 async function getCities() {
   const database = await getDatabase();
-  return await database.collection(COLLECTION_NAME).find({}).toArray();
+  return await database
+    .collection(COLLECTION_NAME)
+    .find({})
+    .toArray();
 }
 
 /**
@@ -30,7 +35,7 @@ async function getCities() {
 async function deleteCity(id) {
   const database = await getDatabase();
   await database.collection(COLLECTION_NAME).deleteOne({
-    _id: new ObjectID(id),
+    _id: new ObjectID(id)
   });
 }
 
@@ -44,12 +49,12 @@ async function updateCity(id, city) {
   const database = await getDatabase();
   delete city._id;
   await database.collection(COLLECTION_NAME).update(
-      {_id: new ObjectID(id)},
-      {
-        $set: {
-          ...city,
-        },
-      },
+    { _id: new ObjectID(id) },
+    {
+      $set: {
+        ...city
+      }
+    }
   );
 }
 
@@ -57,5 +62,5 @@ module.exports = {
   insertCity,
   getCities,
   deleteCity,
-  updateCity,
+  updateCity
 };

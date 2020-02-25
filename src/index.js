@@ -1,18 +1,13 @@
-import express from "express";
-import { json } from "body-parser";
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import { PORT } from "../configs/constants";
-import { startDatabase } from "./database/mongo";
-import {
-  insertCity,
-  getCities,
-  deleteCity,
-  updateCity
-} from "./database/cities";
-import jwt from "express-jwt";
-import { expressJwtSecret } from "jwks-rsa";
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const {PORT} = require('../configs/constants');
+const {startDatabase} = require('./database/mongo');
+const {insertCity, getCities, deleteCity, updateCity} = require('./database/cities');
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
 
 // defining the Express app
 const app = express();
@@ -21,16 +16,19 @@ const app = express();
 app.use(helmet());
 
 // using bodyParser to parse JSON bodies into JS objects
-app.use(json());
+app.use(bodyParser.json());
 
 // enabling CORS for all requests
 app.use(cors());
 
 // adding morgan to log HTTP requests
 app.use(morgan("combined"));
-
+// defining an endpoint to return all cities
+app.get("/", async (req, res) => {
+  res.send(await getCities());
+});
 const checkJwt = jwt({
-  secret: expressJwtSecret({
+  secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
@@ -42,10 +40,7 @@ const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 app.use(checkJwt);
-// defining an endpoint to return all cities
-app.get("/", async (req, res) => {
-  res.send(await getCities());
-});
+
 app.post("/", async (req, res) => {
   const newCity = req.body;
   await insertCity(newCity);

@@ -15,8 +15,8 @@ async function startDatabase() {
   });
   try {
     await client.connect();
-  } catch (e) {
-    console.log("DB error: ", e);
+  } catch (error) {
+    console.log("DB error: ", error);
   } finally {
     // await client.close();
   }

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const {PORT} = require('../configs/constants');
 const {startDatabase} = require('./database/mongo');
 const {insertCity, getCities, deleteCity, updateCity} = require('./database/cities');
 const jwt = require('express-jwt');
@@ -24,49 +25,46 @@ app.use(cors());
 // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 
-// defining an endpoint to return all cities
-app.get('/', async (req, res) => {
-    res.send(await getCities());
-});
 
 const checkJwt = jwt({
-    secret: jwksRsa.expressJwtSecret({
-      cache: true,
-      rateLimit: true,
-      jwksRequestsPerMinute: 5,
-      jwksUri: `https://avanijoshi.auth0.com/.well-known/jwks.json`
-    }),
-    // Validate the audience and the issuer.
-    audience: 'https://air-quality',
-    issuer: `https://avanijoshi.auth0.com/`,
-    algorithms: ['RS256']
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://avanijoshi.auth0.com/.well-known/jwks.json`,
+  }),
+  // Validate the audience and the issuer.
+  audience: 'https://air-quality',
+  issuer: `https://avanijoshi.auth0.com/`,
+  algorithms: ['RS256'],
 });
 app.use(checkJwt);
-
+// defining an endpoint to return all cities
+app.get('/', async (req, res) => {
+  res.send(await getCities());
+});
 app.post('/', async (req, res) => {
-    const newCity= req.body;
-    await insertCity(newCity);
-    res.send({ message: 'New city inserted.' });
-  });
-  
+  const newCity= req.body;
+  await insertCity(newCity);
+  res.send({message: 'New city inserted.'});
+});
+
 // endpoint to delete a City
 app.delete('/:id', async (req, res) => {
-    await deleteCity(req.params.id);
-    res.send({ message: 'City removed.' });
+  await deleteCity(req.params.id);
+  res.send({message: 'City removed.'});
 });
 
 // endpoint to update a City
 app.put('/:id', async (req, res) => {
-    const updatedCity= req.body;
-    await updateCity(req.params.id, updatedCity);
-    res.send({ message: 'City updated.' });
+  const updatedCity= req.body;
+  await updateCity(req.params.id, updatedCity);
+  res.send({message: 'City updated.'});
 });
 
 startDatabase().then(async () => {
-    // await insertCity({city: 'Hello, now from the in-memory database!'});
-  
-    // starting the server
-    app.listen(4000, () => {
-        console.log('listening on port: 4000');
-    });
+  // starting the server
+  app.listen(PORT, () => {
+    console.log('listening on port: ', PORT);
+  });
 });

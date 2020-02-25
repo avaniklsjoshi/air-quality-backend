@@ -2,8 +2,9 @@
   "name": "air-quality-backend",
   "version": "1.0.0",
   "description": "backend app for air quality",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,7 +26,10 @@
     "helmet": "^3.21.2",
     "jwks-rsa": "^1.7.0",
     "mongodb": "^3.5.3",
-    "mongodb-memory-server": "^6.2.4",
     "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0"
   }
 }

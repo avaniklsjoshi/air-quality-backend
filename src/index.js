@@ -13,6 +13,7 @@ import {
 } from "./database/cities";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
+import { JWKS_URI, AUDIENCE, ALGORITHMS } from "../configs/constants";
 
 // defining the Express app
 const app = express();
@@ -28,23 +29,25 @@ app.use(cors());
 
 // adding morgan to log HTTP requests
 app.use(morgan("combined"));
-// defining an endpoint to return all cities
-app.get("/", async (req, res) => {
-  res.send(await getCities());
-});
+
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://avanijoshi.auth0.com/.well-known/jwks.json`
+    jwksUri: JWKS_URI
   }),
   // Validate the audience and the issuer.
-  audience: "https://air-quality",
-  issuer: `https://avanijoshi.auth0.com/`,
-  algorithms: ["RS256"]
+  aud: AUDIENCE,
+  // issuer: ISSUER,
+  algorithms: ALGORITHMS
 });
 app.use(checkJwt);
+
+// defining an endpoint to return all cities
+app.get("/", async (req, res) => {
+  res.send(await getCities());
+});
 
 app.post("/", async (req, res) => {
   const newCity = req.body;

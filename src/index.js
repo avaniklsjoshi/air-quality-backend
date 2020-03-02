@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import { PORT } from "../configs/constants";
+import { PORT } from "../configs/config";
 import { startDatabase } from "./database/mongo";
 import {
   insertCity,
@@ -13,7 +13,7 @@ import {
 } from "./database/cities";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
-import { JWKS_URI, AUDIENCE, ALGORITHMS } from "../configs/constants";
+import { JWKS_URI, AUDIENCE, ALGORITHMS } from "../configs/config";
 
 // defining the Express app
 const app = express();

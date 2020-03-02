@@ -1,6 +1,6 @@
 import { getDatabase } from "./mongo";
 import { ObjectID } from "mongodb";
-import { COLLECTION_NAME } from "../../configs/constants";
+import { COLLECTION_NAME } from "../../configs/config";
 
 /**
  * This function insert city data in DB

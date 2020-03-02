@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import { DB_USERNAME, DB_PASSWORD } from "../../configs/constants";
+import { DB_USERNAME, DB_PASSWORD } from "../../configs/config";
 
 let database = null;
 

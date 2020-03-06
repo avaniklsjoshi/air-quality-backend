@@ -12,8 +12,8 @@ import {
   updateCity
 } from "./database/cities";
 import jwt from "express-jwt";
-import jwksRsa from "jwks-rsa";
-import { JWKS_URI, AUDIENCE, ALGORITHMS } from "../configs/config";
+import jwks from "jwks-rsa";
+import { JWKS_URI, AUDIENCE, ALGORITHMS, ISSUER } from "../configs/config";
 
 // defining the Express app
 const app = express();
@@ -31,15 +31,15 @@ app.use(cors());
 app.use(morgan("combined"));
 
 const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: JWKS_URI
-  }),
+  secret: jwks.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: JWKS_URI
+}),
   // Validate the audience and the issuer.
-  aud: AUDIENCE,
-  // issuer: ISSUER,
+  audience: AUDIENCE,
+  issuer: ISSUER,
   algorithms: ALGORITHMS
 });
 app.use(checkJwt);
